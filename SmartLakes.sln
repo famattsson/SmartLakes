@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.27428.2037
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "SmartLakes\Presentation.csproj", "{4FA91822-7634-4924-97EF-535BFB0A61B2}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Logic", "Logic\Logic.csproj", "{B8D80200-3E53-466C-BB6B-98A51EBCC061}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Data\Data.csproj", "{9C0B58C6-638B-487C-9263-B5CFEEC72E4B}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Presentation", "Presentation\Presentation.csproj", "{4FA91822-7634-4924-97EF-535BFB0A61B2}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,6 +15,14 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B8D80200-3E53-466C-BB6B-98A51EBCC061}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B8D80200-3E53-466C-BB6B-98A51EBCC061}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B8D80200-3E53-466C-BB6B-98A51EBCC061}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B8D80200-3E53-466C-BB6B-98A51EBCC061}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9C0B58C6-638B-487C-9263-B5CFEEC72E4B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9C0B58C6-638B-487C-9263-B5CFEEC72E4B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9C0B58C6-638B-487C-9263-B5CFEEC72E4B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9C0B58C6-638B-487C-9263-B5CFEEC72E4B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{4FA91822-7634-4924-97EF-535BFB0A61B2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{4FA91822-7634-4924-97EF-535BFB0A61B2}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{4FA91822-7634-4924-97EF-535BFB0A61B2}.Release|Any CPU.ActiveCfg = Release|Any CPU
