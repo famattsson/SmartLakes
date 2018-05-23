@@ -1,0 +1,161 @@
+﻿@using Data;
+
+
+@model List<TempRecords>
+
+
+
+@helper GenerateDropdownContents()
+    {
+        <div class="dropdown">
+            <button class="btn btn-primary dropdown-toggle" data-toggle="dropdown">
+                Välj Sjö
+                <span class="caret"></span>
+            </button>
+            <ul class="dropdown-menu">
+                @{List<string> sjöar = new List<string>() { "Vattern", "Munksjön", "nån annan sjö", "Kallbergsgatan" };
+                    foreach (var elem in sjöar)
+                    {
+                        <li>
+                            <a href="#" class="small" data-value="@elem" tabIndex="-1">
+                                <input type="checkbox"/>&nbsp;@elem
+                            </a>
+                        </li>
+                    }
+                }
+            </ul>
+        </div>
+}
+
+@{ 
+    Dictionary<string, List<TempRecords>> dateRecordDict = new Dictionary<string, List<TempRecords>>();
+    foreach (var elem in Model)
+    {
+        List<TempRecords> value;
+        if(!dateRecordDict.TryGetValue(elem.date, out value))
+        {
+            dateRecordDict.Add(elem.date, new List<TempRecords>());
+        }
+    }
+    foreach (var elem in Model)
+    {
+        dateRecordDict[elem.date].Add(elem);
+    }
+}
+
+<div class="row container">
+    <div class="col-sm-2">
+        @GenerateDropdownContents()
+    </div>
+    <div class="col-sm-10">
+        <div class="row">
+            <div class='col-sm-10'>
+                <form method="get" action="/TempData/GetData">
+                    <input name="fromDate" type='date' class="form-control" style="display:inline" />
+                    <input name="toDate" type='date' class="form-control" style="display:inline" />
+                    <input type="submit" value="Submit" />
+                </form>
+
+            </div>
+        </div>
+
+        <div class="col-sm-10" style="padding:20px" color="#fff">
+            <div id="chart_div"></div>
+            <br />
+        </div>
+    </div>
+</div>
+
+<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+<script type="text/javascript">
+    var data = null;
+    var chart = null;
+    var options = null;
+
+    google.charts.load('current', { packages: ['corechart', 'line'] });
+    google.charts.setOnLoadCallback(drawBasic);
+
+    function drawBasic() {
+
+        data = new google.visualization.DataTable();
+        data.addColumn('timeofday', 'X');
+        @if(dateRecordDict.Count > 0)
+        {
+            foreach (var elem in dateRecordDict.First().Value) {
+                <text>
+                    data.addColumn('number', '@elem.location');
+                </text>
+            }
+
+            foreach (var elem in dateRecordDict)
+            {
+                var date = DateTime.Parse(elem.Value[0].time);
+                <text>
+                    data.addRow(
+                        [[@date.Hour,@date.Minute,@date.Second]@foreach(var elem2 in elem.Value){<text>, @elem2.temperature</text>}]
+                    );
+                </text>
+            }
+        }
+        options = {
+            hAxis: {
+                title: 'Time'
+            },
+            vAxis: {
+                title: 'Temperatur (celsius)'
+            },
+            curveType: 'function',
+            animation: {
+                duration: 750,
+                easing: 'out'
+            },
+            vAxis: { minValue: 0, maxValue: 30 }
+        };
+
+        chart = new google.visualization.LineChart(document.getElementById('chart_div'));
+
+        chart.draw(data, options);
+    }
+
+    $("[type='number']").keypress(function (evt) {
+        evt.preventDefault();
+    });
+    $(window).resize(function () {
+        if (chart != null) {
+            chart.draw(data, options);
+        }
+    })
+
+    var locations = [];
+    var dropdownActive = false;
+
+    $('.dropdown-menu a').on('click', function (event) {
+
+        var $target = $(event.currentTarget),
+            val = $target.attr('data-value'),
+            $inp = $target.find('input'),
+            idx;
+
+        if ((idx = locations.indexOf(val)) > -1) {
+            locations.splice(idx, 1);
+            $inp.prop('checked', false);
+        } else {
+            locations.push(val);
+            $inp.prop('checked', true);
+        }
+
+        $target.blur();
+
+        return false;
+    });
+
+    $('.dropdown-toggle').on('click', function (event) {
+        if (dropdownActive) {
+            $.post("/TempData/ChooseLocation/" + locations)
+            dropdownActive = false;
+        }
+        else if (!dropdownActive) {
+            dropdownActive = true;
+        }
+    })
+</script>
