@@ -7,13 +7,45 @@ namespace Data
 {
     public class TempDataGetter
     {
-        static public TempRecord GetRecords (string fromDate, string toDate, List<string> locations)
+        static public List<TempRecords> GetRecords (string fromDate, string toDate, List<string> locations)
         {
             using (var db = new SmartLakesEntities())
+
             {
-                /*var query = from tempRecord in db.TempRecords 
-                            where*/ //Write rest of query once database is finalized
-                return null;
+                if((fromDate != null && toDate != null) && (fromDate != "" && toDate != "") && locations.Count > 0  )
+                {
+                    var query = from tempRecord in db.TempRecords.ToList()
+                                where DateTime.Parse(tempRecord.time) >= DateTime.Parse(fromDate) && DateTime.Parse(tempRecord.time) <= DateTime.Parse(toDate)
+                                && locations.Contains(tempRecord.location)
+                                orderby tempRecord.location
+                                select tempRecord;
+                    return query.ToList();
+                }
+                else if (fromDate != null && toDate != null)
+                {
+                    var query = from tempRecord in db.TempRecords
+                                where locations.Contains(tempRecord.location)
+                                orderby tempRecord.location
+                                select tempRecord;
+                    return query.ToList();
+                }
+                else if(locations != null && locations.Count > 0)
+                {
+                    var query = from tempRecord in db.TempRecords
+                                where locations.Contains(tempRecord.location)
+                                orderby tempRecord.location
+                                select tempRecord;
+
+                    return query.ToList();
+                }
+                else
+                {
+                    var query = from tempRecord in db.TempRecords
+                                orderby tempRecord.location
+                                select tempRecord;
+                    return query.ToList();
+                }
+
             }
         }
     }

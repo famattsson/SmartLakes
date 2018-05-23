@@ -12,11 +12,12 @@ namespace Data
     using System;
     using System.Collections.Generic;
     
-    public partial class TempRecord
+    public partial class TempRecords
     {
         public int Id { get; set; }
-        public string temperature { get; set; }
+        public double temperature { get; set; }
         public string location { get; set; }
         public string time { get; set; }
+        public string date { get; set; }
     }
 }

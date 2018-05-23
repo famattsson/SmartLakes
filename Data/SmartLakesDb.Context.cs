@@ -30,6 +30,6 @@ namespace Data
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<TempRecord> TempRecords { get; set; }
+        public virtual DbSet<TempRecords> TempRecords { get; set; }
     }
 }

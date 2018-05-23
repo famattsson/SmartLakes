@@ -8,7 +8,7 @@ namespace Logic
 {
     public class TempDataHandler
     {
-        static public TempRecord GetRecords (string fromDate, string toDate, List<string> locations)
+        static public List<TempRecords> GetRecords (string fromDate, string toDate, List<string> locations)
         {
             return TempDataGetter.GetRecords(fromDate, toDate, locations);
         }

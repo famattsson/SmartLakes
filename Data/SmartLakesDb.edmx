@@ -4,32 +4,33 @@
   <edmx:Runtime>
     <!-- SSDL content -->
     <edmx:StorageModels>
-      <Schema Namespace="SmartLakesDb.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+    <Schema Namespace="SmartLakesModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
         <EntityType Name="TempRecords">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="temperature" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="temperature" Type="float" Nullable="false" />
           <Property Name="location" Type="varchar" MaxLength="50" Nullable="false" />
           <Property Name="time" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="date" Type="varchar" MaxLength="50" Nullable="false" />
         </EntityType>
-        <EntityContainer Name="SmartLakesDbStoreContainer">
+        <EntityContainer Name="SmartLakesModelStoreContainer">
           <EntitySet Name="TempRecords" EntityType="Self.TempRecords" Schema="dbo" store:Type="Tables" />
         </EntityContainer>
-      </Schema>
-    </edmx:StorageModels>
+      </Schema></edmx:StorageModels>
     <!-- CSDL content -->
     <edmx:ConceptualModels>
-      <Schema Namespace="SmartLakesDb" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+      <Schema Namespace="SmartLakesModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityType Name="TempRecords">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="temperature" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="temperature" Type="Double" Nullable="false" />
           <Property Name="location" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
           <Property Name="time" Type="String" MaxLength="50" FixedLength="false" Unicode="false" Nullable="false" />
+          <Property Name="date" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
         </EntityType>
         <EntityContainer Name="SmartLakesEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="TempRecords" EntityType="Self.TempRecords" />
@@ -39,10 +40,11 @@
     <!-- C-S mapping content -->
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
-        <EntityContainerMapping StorageEntityContainer="SmartLakesDbStoreContainer" CdmEntityContainer="SmartLakesEntities">
+        <EntityContainerMapping StorageEntityContainer="SmartLakesModelStoreContainer" CdmEntityContainer="SmartLakesEntities">
           <EntitySetMapping Name="TempRecords">
-            <EntityTypeMapping TypeName="SmartLakesDb.TempRecords">
+            <EntityTypeMapping TypeName="SmartLakesModel.TempRecords">
               <MappingFragment StoreEntitySet="TempRecords">
+                <ScalarProperty Name="date" ColumnName="date" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="temperature" ColumnName="temperature" />
                 <ScalarProperty Name="location" ColumnName="location" />
